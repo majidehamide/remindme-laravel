@@ -7,6 +7,7 @@ Step by step install remind me app locally
 - run `docker compose up -d`
 - run `docker compose exec php bash`
 - run `composer setup`
+- run `php artisan migrate:fresh --seed `
 
 #### From the second time onwards
 - run `docker compose up -d`
