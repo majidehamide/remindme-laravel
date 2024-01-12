@@ -2,8 +2,13 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Enums\ErrorType;
+use App\Enums\ErrorMessage;
+use Illuminate\Http\Request;
+use App\Helpers\JsonResponseHelper;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -26,5 +31,20 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+        $this->renderable(function (NotFoundHttpException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Route not found.'
+                ], 404);
+            }
+        });
+        $this->renderable(function (\Exception $e, Request $request) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 404);
+            return JsonResponseHelper::internalError(ErrorType::INTERNAL_ERROR_TYPE, ErrorMessage::INTERNAL_ERROR_MESSAGE);
+        });
+        
+        
     }
 }

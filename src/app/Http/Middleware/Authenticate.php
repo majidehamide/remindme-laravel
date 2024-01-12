@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
+use App\Helpers\JsonResponseHelper;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
@@ -12,6 +13,15 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        return $request->expectsJson() ? null : route('login');
+        if($request->expectsJson()){
+            return JsonResponseHelper::unauthorizedError();
+        }else{
+            return route('/');
+        } 
+    }
+
+    protected function unauthenticated($request, array $guards)
+    {
+         return JsonResponseHelper::unauthorizedError();
     }
 }
