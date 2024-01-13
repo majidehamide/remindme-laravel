@@ -1,9 +1,8 @@
 # Remind me app
 Step by step install remind me app locally
 
-## Backend
-- from main folder : `cd back-end/`
 #### For first time only !
+- from main folder : `cd src/`
 - run `docker compose up -d`
 - run `docker compose exec php bash`
 - run `composer setup`
@@ -22,6 +21,4 @@ Step by step install remind me app locally
 
 
 ## Frontend
-- from main folder : `cd front-end/`
-- Run `docker compose up -d`
 - Open `http://localhost:3000`
