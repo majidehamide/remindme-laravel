@@ -34,15 +34,12 @@ class Handler extends ExceptionHandler
         $this->renderable(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response()->json([
-                    'message' => 'Route not found.'
+                    "ok"=> false,
+                    "err"=> "ERR_NOT_FOUND",
+                    "msg"=> "resource is not found"
                 ], 404);
             }
-        });
-        $this->renderable(function (\Exception $e, Request $request) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 404);
-            return JsonResponseHelper::internalError(ErrorType::INTERNAL_ERROR_TYPE, ErrorMessage::INTERNAL_ERROR_MESSAGE);
+            
         });
         
         

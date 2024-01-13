@@ -50,9 +50,10 @@
         "setup": [
             "composer install",
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "php artisan migrate",
             "php artisan key:generate",
-            "php artisan config:cache",
-            "php artisan migrate"
+            "php artisan config:cache"
+          
         ]
     },
     "extra": {
